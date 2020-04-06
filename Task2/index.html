@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="comment-list" data-count="2"></div>
+    <div class="comment-list" data-count="2"></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+      function solution() {
+        fetch("http://localhost:3000/data")
+          .then((res) => {
+            return res.json();
+          })
+          .then(
+            (response) => {
+              var allElements = "";
+              response.map((obj) => {
+                var element = `<div class='comment-item'>
+                <div class='comment-item_username'>${obj.username}</div>         
+                <div class='comment-item_message'>${obj.message}</div>         
+              </div>`;
+                allElements += element;
+              });
+
+              var allDivs = document.querySelectorAll("div");
+              console.log(allDivs);
+              allDivs.forEach((ele) => {
+                ele.innerHTML = allElements;
+              });
+            },
+            () => {
+              document.querySelector("div").innerHTML = "Loading ....";
+            }
+          );
+      }
+
+      solution();
+    </script>
+  </body>
+</html>
